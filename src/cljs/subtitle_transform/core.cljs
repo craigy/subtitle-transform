@@ -6,12 +6,13 @@
 
 (enable-console-print!)
 
-(def as-and-bs
+(def ini
   (insta/parser
-    "S = AB*
-     AB = A B
-     A = 'a'+
-     B = 'b'+"))
+    "S = tagged*
+     tagged = tag line*
+     tag = '['content']'
+     line = '\n' content
+     content = #'[^\\[\\]]*'"))
 
 (defonce app-state
   (r/atom
@@ -19,7 +20,7 @@
      :output ""}))
 
 (defn in->out [input]
-  (let [parsed (as-and-bs input)]
+  (let [parsed (ini input)]
     (if (and (not (insta/failure? parsed)) (seq parsed))
       (str parsed)
       (print-str (insta/get-failure parsed)))))
