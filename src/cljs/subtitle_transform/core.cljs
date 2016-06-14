@@ -20,7 +20,7 @@
      :output nil}))
 
 (defn in->out [input]
-  (let [parsed (ini input)]
+  (let [parsed (ini (string/trim input))]
     (if (and (not (insta/failure? parsed)) (seq parsed))
       parsed
       (print-str (insta/get-failure parsed)))))
@@ -31,15 +31,15 @@
     (swap! app-state assoc :output (in->out input))))
 
 (defn out-trans [out]
-  (map
-    (fn [[tagged & contents]]
-      (map
-        (fn [[tag-or-line & body]]
-          (case tag-or-line
-            :tag (str "[" (apply str body) "]")
-            :line (apply str body)))
-        contents))
-    out))
+  (apply str
+    (map
+      (fn [[tagged & contents]]
+        (apply str
+          (map
+            (fn [[tag-or-line & body]]
+              (apply str body))
+            contents)))
+      out)))
 
 (def ta-style
   {:width 400
