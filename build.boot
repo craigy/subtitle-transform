@@ -1,5 +1,5 @@
 (set-env!
- :source-paths #{"src/cljs"}
+ :source-paths #{"src/cljc" "src/cljs"}
  :resource-paths #{"resources"}
 
  :dependencies
