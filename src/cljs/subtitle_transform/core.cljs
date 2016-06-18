@@ -7,23 +7,13 @@
 
 (enable-console-print!)
 
-(def ini
-  (insta/parser
-    "<S> = tagged*
-     tagged = tag '\n' line*
-     tag = '[' nonclose+ ']'
-     line = nonclose #'[^\n]*' nonbracket*
-     <nonclose> = #'[^\n\\[\\]]'
-     <nonbracket> = #'[^\\[\\]]'
-     <whitespace> = #'\\s*'"))
-
 (defonce app-state
   (r/atom
     {:input ""
      :output nil}))
 
 (defn in->out [input]
-  (let [parsed (ini (string/trim input))]
+  (let [parsed (common/ini (string/trim input))]
     (if (and (not (insta/failure? parsed)) (seq parsed))
       parsed
       (print-str (insta/get-failure parsed)))))
