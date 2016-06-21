@@ -3,7 +3,8 @@
     [subtitle-transform.common :as common]
     [reagent.core :as r]
     [clojure.string :as string]
-    [instaparse.core :as insta]))
+    [instaparse.core :as insta]
+    [cljs.spec :as s]))
 
 (enable-console-print!)
 
